@@ -1,0 +1,41 @@
+#Simple Messaging App 
+
+try:
+    with open("message.txt", "x") as f:
+        pass
+    print("Success: message.txt created.")
+except FileExistsError:
+    print("File already exists.")
+except Exception as e:
+    print(f"Error creating file: {e}")
+
+while True:
+    print("\nWelcome to Messaging App\n1. Send Message\n2. View Messages\n3. Exit")
+    choice = input("Enter choice: ")
+
+    if choice == '1':
+        msg = input("Enter your message: ")
+        try:
+            with open("message.txt", "a") as f:
+                f.write(msg + "\n")
+            print("Message sent!")
+        except Exception as e:
+            print(f"Error sending message: {e}")
+    elif choice == '2':
+        print("\n--- Messages ---")
+        try:
+            with open("message.txt", "r") as f:
+                content = f.read()
+                if content:
+                    print(content.strip())
+                else:
+                    print("(No messages)")
+        except FileNotFoundError:
+            print("Error: message.txt not found.")
+        except Exception as e:
+            print(f"Error reading messages: {e}")
+    elif choice == '3':
+        print("Exiting...")
+        break
+    else:
+        print("Invalid choice, please try again.")
